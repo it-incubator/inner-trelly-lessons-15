@@ -5,12 +5,12 @@ import type { DomainTask, UpdateTaskModel } from "@/features/todolists/api/tasks
 import { createTodolistTC, deleteTodolistTC } from "./todolists-slice"
 
 export const tasksSlice = createAppSlice({
-  name: "tasks",
+  name: 'tasks',
   initialState: {} as TasksState,
   selectors: {
     selectTasks: (state) => state,
   },
-  extraReducers: (builder) => {
+  extraReducers: builder => {
     builder
       .addCase(createTodolistTC.fulfilled, (state, action) => {
         state[action.payload.todolist.id] = []
@@ -105,12 +105,6 @@ export const tasksSlice = createAppSlice({
         },
       },
     ),
-    changeTaskTitleAC: create.reducer<{ todolistId: string; taskId: string; title: string }>((state, action) => {
-      const task = state[action.payload.todolistId].find((task) => task.id === action.payload.taskId)
-      if (task) {
-        task.title = action.payload.title
-      }
-    }),
   }),
 })
 

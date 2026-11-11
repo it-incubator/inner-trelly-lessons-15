@@ -7,9 +7,9 @@ export const todolistsSlice = createAppSlice({
   name: "todolists",
   initialState: [] as DomainTodolist[],
   selectors: {
-    selectTodolists: (state) => state,
+    selectTodolists: (state) => state
   },
-  reducers: (create) => ({
+  reducers: create => ({
     fetchTodolistsTC: create.asyncThunk(
       async (_, { dispatch, rejectWithValue }) => {
         try {
@@ -27,8 +27,8 @@ export const todolistsSlice = createAppSlice({
           action.payload?.todolists.forEach((tl) => {
             state.push({ ...tl, filter: "all" })
           })
-        },
-      },
+        }
+      }
     ),
     createTodolistTC: create.asyncThunk(
       async (title: string, { dispatch, rejectWithValue }) => {
@@ -45,8 +45,8 @@ export const todolistsSlice = createAppSlice({
       {
         fulfilled: (state, action) => {
           state.unshift({ ...action.payload.todolist, filter: "all" })
-        },
-      },
+        }
+      }
     ),
     deleteTodolistTC: create.asyncThunk(
       async (id: string, { dispatch, rejectWithValue }) => {
@@ -66,8 +66,8 @@ export const todolistsSlice = createAppSlice({
           if (index !== -1) {
             state.splice(index, 1)
           }
-        },
-      },
+        }
+      }
     ),
     changeTodolistTitleTC: create.asyncThunk(
       async (payload: { id: string; title: string }, { dispatch, rejectWithValue }) => {
@@ -87,21 +87,28 @@ export const todolistsSlice = createAppSlice({
           if (index !== -1) {
             state[index].title = action.payload.title
           }
-        },
-      },
-    ),
-    changeTodolistFilterAC: create.reducer<{ id: string; filter: FilterValues }>((state, action) => {
-      const todolist = state.find((todolist) => todolist.id === action.payload.id)
-      if (todolist) {
-        todolist.filter = action.payload.filter
+        }
       }
-    }),
-  }),
+    ),
+    changeTodolistFilterAC: create.reducer<{ id: string; filter: FilterValues }>(
+      (state, action) => {
+        const todolist = state.find(todolist => todolist.id === action.payload.id)
+        if (todolist) {
+          todolist.filter = action.payload.filter
+        }
+      }
+    )
+  })
 })
 
 export const { selectTodolists } = todolistsSlice.selectors
-export const { fetchTodolistsTC, createTodolistTC, deleteTodolistTC, changeTodolistTitleTC, changeTodolistFilterAC } =
-  todolistsSlice.actions
+export const {
+  fetchTodolistsTC,
+  createTodolistTC,
+  deleteTodolistTC,
+  changeTodolistTitleTC,
+  changeTodolistFilterAC
+} = todolistsSlice.actions
 export const todolistsReducer = todolistsSlice.reducer
 
 export type DomainTodolist = Todolist & {

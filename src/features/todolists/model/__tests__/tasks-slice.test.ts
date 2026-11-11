@@ -187,7 +187,7 @@ test("correct task should change its title", () => {
 test("array should be created for new todolist", () => {
   const title = "New todolist"
   const todolist = { id: "todolistId3", title, addedAt: "",
- updatedAt: "", order: 0 }
+    updatedAt: "", order: 0 }
   const endState = tasksReducer(startState, createTodolistTC.fulfilled({ todolist }, "requestId", title))
 
   const keys = Object.keys(endState)
